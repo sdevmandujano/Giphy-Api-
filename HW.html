@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" type="text/css" href="theme.css">
+    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
+
+
+
+  <meta charset="utf-8">
+  <title>Favorite games</title>
+  <style type="text/css">
+    button,
+    div,
+    form,
+    input {
+      margin: 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <h1>Videogame Search</h1>
+
+    <!-- games buttons will get dumped here (DONE) -->
+    <div id="games-view"></div>
+
+    <form id="game-form">
+      <label for="game-input">Type the Game Title </label>
+      <input type="text" id="game-input"><br>
+    <!-- ----------------------------------------- -->
+
+      <!-- Button triggers new game to be added (DONE) -->
+      <input id="add-game" type="submit" value="Add a game">
+    </form>
+     <!---- -------------------------------------------->
+      <!-- Place to display the Gifs (DONE) -->
+
+    <div id="gifs-appear-here">
+  </div>
+
+      <!-- Adds JQUERY (DONE) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> 
+    <!-- Adds Javascript Coding (DONE) -->
+    <script type="text/javascript">
+      
+      // JAVASCRIPT / JQUERY STARTS
+      
+      //Initial array of games (DONE)
+      var games = ["Final Fantasy", "Dark Souls", "The Legend of Zelda", "Silent Hill"];
+      ///////////////////////////////////////////////////////////////////////
+      // Function for displaying game data (DONE)
+      function renderButtons() {
+      ///////////////////////////////////////////////////////////////////////
+
+        // Deleting the game buttons prior to adding new game buttons (DONE)
+        // (this is necessary otherwise we will have repeat buttons) (DONE)
+        $("#games-view").empty();
+
+        ///////////////////////////////////////////////////////////////////
+
+        // Looping through the array of games (DONE)
+        for (var i = 0; i < games.length; i++) {
+      /////////////////////////////////////////////////////////////////////
+
+          // Then dynamicaly generating buttons for each game in the array. 
+          // This code $("<button>") is all jQuery needs to create the start and end tag. (<button></button>) (DONE)
+          var a = $("<button>");
+          /////////////////////////////////////////////////////////////////////
+          // Adding a class to the button(a) (DONE)
+          a.addClass("game");
+          //////////////////////////////////////////////////////////////////////
+          // Adding a data-attribute with a value of the game at index i (DONE)
+          a.attr("data-name", games[i]);
+          ////////////////////////////////////////////////////////////////////
+          // Providing the button's text with a value of the game at index i (DONE)
+          a.text(games[i]);
+          ////////////////////////////////////////////////////////////////////
+          // Adding the button to the HTML, to the games-view div  (DONE)
+          $("#games-view").append(a);
+        }
+      }
+
+      /////////////////FUNCTION BUTTON CLICKED////////////////////////////////////////
+
+      // This function handles events where one button is clicked (DONE)
+      $("#add-game").on("click", function(event) {
+        /////////////////////////////////////////////////////////////
+        // event.preventDefault() prevents the form from trying to submit itself. 
+        // We're using a form so that the user can hit enter instead of clicking the button if they want
+        event.preventDefault();
+        ////////////////////////////////////////////////////////////
+        // This line will grab the text from the input box (DONE)
+        var game = $("#game-input").val().trim();
+        /////////////////////////////////////////////////////////////
+        // The game from the textbox is then added to our array (DONE)
+        games.push(game);
+        /////////////////////////////////////////////////////////////
+        // calling renderButtons which handles the processing of our game array
+        renderButtons();
+      });
+
+      // Calling the renderButtons function at least once to display the initial list of games (DONE)
+      renderButtons();
+
+
+//ADD GIPHY API TO EACH OF THE BUTTONS WHEN IS CLICKED
+
+
+ // Event listener for all button elements
+ $(document).on("click", ".game", function () {
+
+var gamu = $(this).attr("data-name");
+////////////////////////////////////////////////////////
+// Constructing a URL to search Giphy 
+var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
+  gamu + "&api_key=dc6zaTOxFJmzC&limit=10";
+/////////////////////////////////////////////////////////
+// Performing AJAX GET request
+$.ajax({
+  url: queryURL,
+  method: "GET"
+})
+// After the data comes back from the API
+  .then(function(response) {
+// Stores to the  array of results in the results variable
+    var results = response;
+    console.log(results);
+
+	for (var i = 0; i<results.data.length; i++){
+  
+
+  var gifDiv = $("<div class='item'>");
+
+//Creates an image tag
+  var gameImage = $("<img>");
+
+// Giving the image tag an src attribute of a proprty pulled off the
+// result item
+gameImage.attr("src", results.data[i].images.original.url);
+
+var state = gameImage.attr("data-state");
+
+if (gameImage.attr("data-state") == "still") {
+	gameImage.attr('src', results.data[i].images.original_still.url);
+	gameImage.attr("data-state", "animate");
+} else {
+	gameImage.attr('src', results.data[i].images.original.url);
+	gameImage.attr("data-state", "still");
+}
+gifDiv.append(gameImage);
+
+// Prepending the gifDiv to the "#gifs-appear-here" div in the HTML
+$("#gifs-appear-here").prepend(gifDiv);
+}
+  });
+});
+    </script>
+  </div>
+</body>
+
+</html>

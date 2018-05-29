@@ -1,0 +1,42 @@
+body  {
+    background-image: url("https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/VGiBmTeaeilt7mgjb/video-game-background-blue_451fb1bpx__F0000.png");
+    font-family: 'Press Start 2P', cursive;
+
+}
+
+.game {
+    background-color: #2AD6F0;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    font-family: 'Press Start 2P', cursive;
+}
+
+
+
+#game-form {
+
+    background-color: #2AD6F0;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+
+}
+
+h1 {
+
+    text-align: center;
+    color: white;
+}
