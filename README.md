@@ -1,6 +1,6 @@
 # Giphy-Api-
 
-![](images/darksouls.png)
+![](images/darksouls.PNG)
 
 
 https://sdevmandujano.github.io/Giphy-Api-/
